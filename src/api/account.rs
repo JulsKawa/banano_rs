@@ -1,7 +1,7 @@
 use crate::units::Raw;
 use serde::Deserialize;
 
-type BlockCount = u128;
+/// type BlockCount = u128;
 
 /// Account balance
 ///
@@ -20,5 +20,5 @@ pub struct AccountBalance {
 #[derive(Debug, Deserialize)]
 pub struct AccountBlockCount {
     #[serde(with = "serde_with::rust::display_fromstr")]
-    pub block_count: BlockCount,
+    pub block_count: u128,
 }

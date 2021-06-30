@@ -18,11 +18,12 @@
 
 use crate::types::{Address};
 pub use self::account::*;
+pub use self::block::*;
 use reqwest::Client;
 use serde_json::json;
 
 mod account;
-
+mod block;
 /// Banano API
 pub struct BananoApi {
     rpc_api: String,
@@ -67,6 +68,17 @@ impl BananoApi {
             .send().await?
             .json().await?;
         Ok(account_block)
+    }
+    pub async fn block_count(&self) -> Result<BlockCount, crate::errors::BananoError> {
+        let request = json!({
+            "action": "block_count",
+        });
+        let block_count: BlockCount = Client::new()
+            .post(self.rpc_api.clone())
+            .json(&request)
+            .send().await?
+            .json().await?;
+        Ok(block_count)
     }
 }
 
